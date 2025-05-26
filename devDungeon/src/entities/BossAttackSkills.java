@@ -324,17 +324,16 @@ public class BossAttackSkills {
     }
     double healthPercentage = calculateBossHealthPercentage(boss);
 
-    // Example logic for selecting an attack based on the boss's state
-    if (healthPercentage > 75) {
+    if (healthPercentage > 75) { // High health - more simple attacks
       return (getBossAttackChance())
           ? fireCone(40, 125, BossAttackSkills.FIREBALL_SPEED + 1, FIREBALL_DAMAGE + 1)
           : fireWall(3);
-    } else if (healthPercentage > 50) {
+    } else if (healthPercentage > 50) { // Medium health - similar but more difficult attacks
       return (getBossAttackChance())
           ? fireCone(35, 125, BossAttackSkills.FIREBALL_SPEED + 2, FIREBALL_DAMAGE + 1)
           : getBossAttackChance() ? fireWall(5) : fireStorm(12, 120);
     } else {
-      // Low health - more defensive or desperate attacks
+      // Low health - more defensive and desperate attacks
       return (getBossAttackChance())
           ? fireStorm(24, 95)
           : getBossAttackChance() ? fireShockWave(6) : fireWall(8);
@@ -367,7 +366,6 @@ public class BossAttackSkills {
     } else if (healthPercentage > 25) {
       return random.nextDouble() < 0.4;
     } else {
-      // Low health - more defensive or desperate attacks
       return random.nextDouble() < 0.2;
     }
   }

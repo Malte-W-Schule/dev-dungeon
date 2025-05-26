@@ -15,8 +15,8 @@ import core.level.elements.tile.PitTile;
 import core.level.utils.Coordinate;
 import core.utils.Point;
 import core.utils.components.MissingComponentException;
-import item.concreteItem.ItemPotionRegenerationPotion;
-import item.concreteItem.ItemPotionSpeedPotion;
+import item.concreteItem.ItemPotionRegeneration;
+import item.concreteItem.ItemPotionSpeed;
 import java.util.List;
 import level.utils.ITickable;
 import level.utils.LevelUtils;
@@ -192,7 +192,7 @@ public class DamagedBridgeRiddleHandler implements ITickable {
             .fetch(InventoryComponent.class)
             .orElseThrow(
                 () -> MissingComponentException.build(speedPotionChest, InventoryComponent.class));
-    ic.add(new ItemPotionSpeedPotion());
+    ic.add(new ItemPotionSpeed());
     Game.add(speedPotionChest);
 
     Entity riddleChest;
@@ -214,7 +214,7 @@ public class DamagedBridgeRiddleHandler implements ITickable {
             .fetch(InventoryComponent.class)
             .orElseThrow(
                 () -> MissingComponentException.build(riddleChest, InventoryComponent.class));
-    ic.add(new ItemPotionRegenerationPotion());
+    ic.add(new ItemPotionRegeneration());
     Game.add(riddleChest);
   }
 }

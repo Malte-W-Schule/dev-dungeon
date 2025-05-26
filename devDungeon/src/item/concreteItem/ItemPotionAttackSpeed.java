@@ -8,18 +8,17 @@ import core.utils.components.path.IPath;
 import core.utils.components.path.SimpleIPath;
 import item.effects.AttackSpeedEffect;
 
-public class ItemPotionAttackSpeedPotion extends Item {
+public class ItemPotionAttackSpeed extends Item {
   public static final IPath DEFAULT_TEXTURE =
       new SimpleIPath("items/potion/attack_speed_potion.png");
 
   static {
-    Item.ITEMS.put(
-        ItemPotionAttackSpeedPotion.class.getSimpleName(), ItemPotionAttackSpeedPotion.class);
+    Item.ITEMS.put(ItemPotionAttackSpeed.class.getSimpleName(), ItemPotionAttackSpeed.class);
   }
 
   private final AttackSpeedEffect attackSpeedEffect;
 
-  public ItemPotionAttackSpeedPotion() {
+  public ItemPotionAttackSpeed() {
     super(
         "Attack Speed Potion",
         "A potion that increases the attack speed of the user.",

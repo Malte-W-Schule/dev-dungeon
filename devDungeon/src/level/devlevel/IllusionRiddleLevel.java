@@ -23,7 +23,7 @@ import core.level.utils.LevelElement;
 import core.utils.components.MissingComponentException;
 import entities.MonsterType;
 import entities.levercommands.OpenPassageCommand;
-import item.concreteItem.ItemPotionSpeedPotion;
+import item.concreteItem.ItemPotionSpeed;
 import java.util.*;
 import java.util.function.Consumer;
 import level.DevDungeonLevel;
@@ -352,7 +352,7 @@ public class IllusionRiddleLevel extends DevDungeonLevel implements ITickable {
                       MissingComponentException.build(
                           newIllusionRiddleLevelChestEntity, InventoryComponent.class));
       ic.add(new ItemPotionHealth(HealthPotionType.WEAK));
-      ic.add(new ItemPotionSpeedPotion());
+      ic.add(new ItemPotionSpeed());
 
       Game.add(newIllusionRiddleLevelChestEntity);
     }

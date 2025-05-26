@@ -29,7 +29,7 @@ public class RegenerationEffect {
             if (healthComponent.isDead()) {
               return;
             }
-            healthComponent.receiveHit(new Damage(-this.amountPerSecond, DamageType.HEAL, null));
+            healthComponent.receiveHit(new Damage(-this.amountPerSecond, DamageType.HEAL, target));
           },
           1000L * i);
     }

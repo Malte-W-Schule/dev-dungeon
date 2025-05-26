@@ -8,20 +8,19 @@ import core.utils.components.path.IPath;
 import core.utils.components.path.SimpleIPath;
 import item.effects.RegenerationEffect;
 
-public class ItemPotionRegenerationPotion extends Item {
+public class ItemPotionRegeneration extends Item {
   public static final IPath DEFAULT_TEXTURE =
       new SimpleIPath("items/potion/regeneration_potion.png");
   private static final int DURATION = 20;
   private static final int HEAL_PER_SECOND = 1;
 
   static {
-    Item.ITEMS.put(
-        ItemPotionRegenerationPotion.class.getSimpleName(), ItemPotionRegenerationPotion.class);
+    Item.ITEMS.put(ItemPotionRegeneration.class.getSimpleName(), ItemPotionRegeneration.class);
   }
 
   private final RegenerationEffect regenerationEffect;
 
-  public ItemPotionRegenerationPotion() {
+  public ItemPotionRegeneration() {
     super(
         "Regeneration Potion",
         "A potion that heals you over time",

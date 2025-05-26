@@ -1,6 +1,9 @@
 package item.effects;
 
 import core.Entity;
+import core.components.PlayerComponent;
+import core.components.VelocityComponent;
+import core.utils.components.MissingComponentException;
 import systems.EventScheduler;
 
 /**
@@ -36,6 +39,30 @@ public class SpeedEffect {
    * @param target The entity to which the speed effect will be applied.
    */
   public void applySpeedEffect(Entity target) {
-    throw new UnsupportedOperationException("Method not implemented.");
+      if (target.fetch(PlayerComponent.class).isEmpty()) {
+          throw new UnsupportedOperationException(
+              "Move speed can only be applied to player entities.");
+      }
+
+      int speedInterval = (int) (1 / this.speedIncrease);
+      int totalSpeedEvents = (int) (this.duration * this.speedIncrease);
+
+      //get the velocitycomponent
+      VelocityComponent velocityComponent = target
+          .fetch(VelocityComponent.class)
+          .orElseThrow( ()-> MissingComponentException.build(target,PlayerComponent.class));
+
+      //incrase the speed by
+      velocityComponent.xVelocity( (velocityComponent.xVelocity()*speedIncrease) );
+      velocityComponent.yVelocity( (velocityComponent.yVelocity()*speedIncrease) );
+
+      //allowes to have for example a speed 150% and -speed 50% affect lead to
+      // 100 * 1.5 = 150 -> 150*0.50 ->75 with debuff
+      //after speed effect ends then -> 75/1.50= 50 and after debuff ends 50/0.5 = 100
+      // nach x sekunden effekt zurück nehmen
+      EVENT_SCHEDULER.scheduleAction(() -> {
+          velocityComponent.xVelocity(velocityComponent.xVelocity() / speedIncrease);
+          velocityComponent.yVelocity(velocityComponent.yVelocity() / speedIncrease);
+      }, (long)(duration * 1000));
   }
 }

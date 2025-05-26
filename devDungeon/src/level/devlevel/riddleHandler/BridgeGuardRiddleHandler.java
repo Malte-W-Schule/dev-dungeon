@@ -26,7 +26,7 @@ import core.level.utils.LevelElement;
 import core.utils.IVoidFunction;
 import core.utils.components.MissingComponentException;
 import entities.levercommands.BridgeControlCommand;
-import item.concreteItem.ItemPotionAttackSpeedPotion;
+import item.concreteItem.ItemPotionAttackSpeed;
 import java.util.ArrayList;
 import java.util.List;
 import level.utils.ITickable;
@@ -254,7 +254,7 @@ public class BridgeGuardRiddleHandler implements ITickable, IHealthObserver {
         chest
             .fetch(InventoryComponent.class)
             .orElseThrow(() -> MissingComponentException.build(chest, InventoryComponent.class));
-    ic.add(new ItemPotionAttackSpeedPotion());
+    ic.add(new ItemPotionAttackSpeed());
     ic.add(new ItemPotionHealth(HealthPotionType.NORMAL));
     Game.add(chest);
 
