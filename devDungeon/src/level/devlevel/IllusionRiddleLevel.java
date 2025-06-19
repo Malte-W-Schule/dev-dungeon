@@ -10,7 +10,6 @@ import contrib.entities.MiscFactory;
 import contrib.item.HealthPotionType;
 import contrib.item.concreteItem.ItemPotionHealth;
 import contrib.utils.components.ai.fight.RangeAI;
-import core.Component;
 import core.Entity;
 import core.Game;
 import core.components.PositionComponent;
@@ -232,8 +231,8 @@ public class IllusionRiddleLevel extends DevDungeonLevel implements ITickable {
 
             double healthPercentage = (double) currentHealth / maxHealth;
             if (healthPercentage <= 0.5) {
-              this.lightTorch(devDungeonRoom, 0, true);
-              this.lightTorch(devDungeonRoom, 1, true);
+              this.setTorchLit(devDungeonRoom, 0, true);
+              this.setTorchLit(devDungeonRoom, 1, true);
             }
           });
 
@@ -298,7 +297,7 @@ public class IllusionRiddleLevel extends DevDungeonLevel implements ITickable {
      * @param i     , determines the index which torch
      * @param lit   , determines if the torches are lit
      */
-  public void lightTorch(DevDungeonRoom r, int i, boolean lit) {
+  public void setTorchLit(DevDungeonRoom r, int i, boolean lit) {
     Entity torch = r.torches()[i];
 
 
@@ -308,6 +307,7 @@ public class IllusionRiddleLevel extends DevDungeonLevel implements ITickable {
                 () -> MissingComponentException.build(torch, TorchComponent.class))
             .lit()
         == lit) return;
+
       torch
         .fetch(InteractionComponent.class)
         .orElseThrow(
