@@ -37,7 +37,11 @@ public class KeyboardConfig {
   public static final ConfigKey<Integer> FIRST_SKILL =
       new ConfigKey<>(new String[] {"skill", "fireball"}, new ConfigIntValue(Input.Keys.Q));
 
-  public static final ConfigKey<Integer> MOUSE_FIRST_SKILL =
+    /** WTF? . */
+    public static final ConfigKey<Integer> SECOND_SKILL =
+        new ConfigKey<>(new String[] {"skill", "fireball"}, new ConfigIntValue(Input.Keys.P));
+
+    public static final ConfigKey<Integer> MOUSE_FIRST_SKILL =
       new ConfigKey<>(
           new String[] {"skill", "mouse_fireball"}, new ConfigIntValue(Input.Buttons.LEFT));
 
