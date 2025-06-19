@@ -34,6 +34,28 @@ import level.utils.LevelUtils;
 import task.tasktype.Quiz;
 
 public enum MonsterType {
+
+    PROTECTOR(
+        "Protector",
+        "character/monster/chort",
+        200,
+        5.0f,
+        1.0f,
+        MonsterDeathSound.LOWER_PITCH,
+        () -> new RangeAI(
+            7f,
+            1f,
+            new Skill(
+                new FireballSkill(ProtectorSkill::positionOfNearestHostileEntity),
+                AIFactory.FIREBALL_COOL_DOWN
+            )
+        ),
+        () -> new RadiusWalk(2f, 2),
+        () -> new RangeTransition(8),
+        5,
+        2 * Game.frameRate(),
+        MonsterIdleSound.LOW_PITCH,
+        0),
   CHORT(
       "Chort",
       "character/monster/chort",

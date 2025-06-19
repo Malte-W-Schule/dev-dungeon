@@ -22,11 +22,13 @@ import core.utils.components.MissingComponentException;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class DevHeroFactory extends HeroFactory {
   public static final boolean ENABLE_MOUSE_MOVEMENT = true;
   private static Skill SKILL =
-      new Skill(new BurningFireballSkill(SkillTools::cursorPositionAsPoint), 500L);
+        new Skill(new BurningFireballSkill(SkillTools::cursorPositionAsPoint), 500L);
+    private static Skill protectorSkill = new Skill(new ProtectorSkill(), 2000L);
 
   /**
    * Update the skill used by the hero.
@@ -66,6 +68,10 @@ public class DevHeroFactory extends HeroFactory {
 
     pc.registerCallback(
         KeyboardConfig.FIRST_SKILL.value(), heroEntity -> SKILL.execute(heroEntity));
+
+
+      pc.registerCallback(
+          KeyboardConfig.SECOND_SKILL.value(), heroEntity -> protectorSkill.execute(heroEntity));
 
     // Mouse movement
     if (ENABLE_MOUSE_MOVEMENT) {
