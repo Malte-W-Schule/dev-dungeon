@@ -10,6 +10,7 @@ import contrib.entities.MiscFactory;
 import contrib.item.HealthPotionType;
 import contrib.item.concreteItem.ItemPotionHealth;
 import contrib.utils.components.ai.fight.RangeAI;
+import core.Component;
 import core.Entity;
 import core.Game;
 import core.components.PositionComponent;
@@ -64,7 +65,7 @@ public class IllusionRiddleLevel extends DevDungeonLevel implements ITickable {
   public IllusionRiddleLevel(
       LevelElement[][] layout, DesignLabel designLabel, List<Coordinate> customPoints) {
     super(layout, designLabel, customPoints);
-    ((FogOfWarSystem) Game.systems().get(FogOfWarSystem.class)).active(true);
+    ((FogOfWarSystem) Game.systems().get(FogOfWarSystem.class)).active(false);//dont even enable the fog of war
     this.riddleHandler = new IllusionRiddleHandler(customPoints, this);
 
     this.rooms =
@@ -213,8 +214,6 @@ public class IllusionRiddleLevel extends DevDungeonLevel implements ITickable {
                 if (devDungeonRoom == null || devDungeonRoom != this.rooms.getLast()) {
                   return; // should not happen, just if boss dies while not in boss room
                 }
-                this.lightTorch(devDungeonRoom, 0, false);
-                this.lightTorch(devDungeonRoom, 1, false);
 
                 this.exitTiles().forEach(tile -> tile.tintColor(-1)); // Workaround due to FogOfWar
               });
@@ -279,7 +278,7 @@ public class IllusionRiddleLevel extends DevDungeonLevel implements ITickable {
     if (this.lastRoom != null && this.lastTorchState != this.lastRoom.isAnyTorchActive()) {
       this.lastTorchState = this.lastRoom.isAnyTorchActive();
       if (this.lastRoom.isAnyTorchActive()) {
-        FogOfWarSystem.VIEW_DISTANCE = 3;
+        FogOfWarSystem.VIEW_DISTANCE = 10;//slightly higher view distance
         ((FogOfWarSystem) Game.systems().get(FogOfWarSystem.class)).revert();
       } else {
         FogOfWarSystem.VIEW_DISTANCE = this.originalFogOfWarDistance;
@@ -291,19 +290,29 @@ public class IllusionRiddleLevel extends DevDungeonLevel implements ITickable {
     this.riddleHandler.onTick(isFirstTick);
   }
 
-  /** TODO: Refactor this method, and add JavaDoc */
+    /**
+     * method sets torches[i] to "lit" in room "r".
+     * TODO: Refactor this method, and add JavaDoc.
+     *
+     * @param r     , is the room in which the torch i gets "lit"
+     * @param i     , determines the index which torch
+     * @param lit   , determines if the torches are lit
+     */
   public void lightTorch(DevDungeonRoom r, int i, boolean lit) {
-    if (r.torches()[i]
+    Entity torch = r.torches()[i];
+
+
+      if (torch
             .fetch(TorchComponent.class)
             .orElseThrow(
-                () -> MissingComponentException.build(r.torches()[i], TorchComponent.class))
+                () -> MissingComponentException.build(torch, TorchComponent.class))
             .lit()
         == lit) return;
-    r.torches()[i]
+      torch
         .fetch(InteractionComponent.class)
         .orElseThrow(
-            () -> MissingComponentException.build(r.torches()[i], InteractionComponent.class))
-        .triggerInteraction(r.torches()[i], Game.hero().orElse(null));
+            () -> MissingComponentException.build(torch, InteractionComponent.class))
+        .triggerInteraction(torch, Game.hero().orElse(null));
   }
 
   /**
